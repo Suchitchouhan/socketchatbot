@@ -2,6 +2,7 @@ import wolframalpha
 import pandas as pd
 import os
 import socket
+import wikipedia
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 host=socket.gethostbyname(socket.gethostname())
 print("server will start on host : ",host)
@@ -19,13 +20,17 @@ while True:
         i=clientsocket.recv(1024**2)
         i=i.decode()
         print("user > ",i)
+        if i=="":
+            clientsocket.send("please say something".encode())
+        else:
+            count=0
+            for x,y in enumerate(quest):
+                if y==i:
+                    print('ganos > ',ans[x])
+                    clientsocket.send(ans[x].encode())
+                    break
         
-        count=0
-        for x,y in enumerate(quest):
-            if y==i:
-                print('ganos > ',ans[x])
-                clientsocket.send(ans[x].encode())
-                break
+        
         if i=="exit" or i=="quit" or i=="close":
             print("thank you for using ".title())
             msg="thank you for using"
@@ -37,5 +42,10 @@ while True:
                 print('ganos > ',ans1)
                 clientsocket.send(ans1.encode())
     except:
-         print("something worng")
-         clientsocket.send('something worng is happening on beckend site'.encode())
+        try:
+            wiki=wikepedia.summary(i)
+            clientsocket.send(wiki.encode())
+            print("something worng")
+        except:
+            clientsocket.send("we are having problem ,no need to warry our crazy programmer will handle".encode())
+            
