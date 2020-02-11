@@ -9,7 +9,10 @@ while True:
    im=s.recv(1024**2)
    im=im.decode()
    print(host,f'>',im)
-   msg=input('user > ')
+   while True:
+      msg=input('user > ')
+      if len(msg)>0:
+         break
    if msg=="exit" or msg =="quit":
       s.send(msg.encode())
       break

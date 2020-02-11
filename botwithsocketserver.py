@@ -40,12 +40,14 @@ while True:
                 res=client.query(i)
                 ans1=next(res.results).text
                 print('ganos > ',ans1)
-                clientsocket.send(ans1.encode())
+                clientsocket.send(ans1.encode())       
+                
     except:
         try:
-            wiki=wikepedia.summary(i)
-            clientsocket.send(wiki.encode())
+            b=wikipedia.summary(i)
+            clientsocket.send(b.encode())
             print("something worng")
         except:
+            
             clientsocket.send("we are having problem ,no need to warry our crazy programmer will handle".encode())
             
