@@ -8,7 +8,7 @@ print("Connect to chat server ")
 while True:
    im=s.recv(1024**2)
    im=im.decode()
-   print(host,f'>',im)
+   print(host,'> ',im)
    while True:
       msg=input('user > ')
       if len(msg)>0:
